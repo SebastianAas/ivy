@@ -1,7 +1,7 @@
 # local
 import ivy
 from ivy.functional.frontends.paddle.func_wrapper import to_ivy_arrays_and_back
-from ivy.func_wrapper import with_unsupported_dtypes
+from ivy.func_wrapper import with_supported_dtypes, with_unsupported_dtypes
 
 
 @with_unsupported_dtypes({"2.0.1 and below": ("float16", "bfloat16")}, "torch")
@@ -23,3 +23,9 @@ def cosine_similarity(x1, x2, *, axis=1, eps=1e-08):
 
     cosine = numerator / denominator
     return cosine
+
+
+@with_supported_dtypes({"2.4.2 and below": ("float32", "float64")}, "paddle")
+@to_ivy_arrays_and_back
+def dropout(x, rate, noise_shape=None, seed=None, name=None):
+    return ivy.dropout(x, rate, noise_shape=noise_shape, seed=seed)
