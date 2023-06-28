@@ -65,3 +65,9 @@ def dropout(x, p=0.5, axis=None, training=True, mode="upscale_in_train", name=No
         else:
             ret = ivy.multiply(x, (1.0 - p))
     return ret
+
+
+@with_supported_dtypes({"2.4.1 and below": ("float32", "float64")}, "paddle")
+@to_ivy_arrays_and_back
+def linear(input, weight, bias=None):
+    return ivy.linear(input, weight, bias=bias)
